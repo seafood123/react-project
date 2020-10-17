@@ -1,26 +1,26 @@
-import React from 'react';
+import React,{ Component, Fragment } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component{
+  render(){
+    const var1 = '1변수';
+    const var2 = '2변수';
+    const condition = false;
+    const style = {
+      backgroundColor : 'red'
+    }
+    return(
+      <Fragment>
+        <div className="App">
+          {var1}         
+        </div>
+        {condition && '거짓'}
+        <h1 style={style}>{var2}</h1>
+        <h2>hihihihi</h2>
+      </Fragment>
+    )
+  }
 }
 
 export default App;
