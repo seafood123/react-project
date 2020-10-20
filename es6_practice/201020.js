@@ -75,3 +75,48 @@ var newObj = {...obj};
 
 var arr = [1,2,3];
 var newArr = [...arr];
+
+
+// function 예약어 생략
+// 기존 javascript
+
+const person = {
+    coding : function(){
+        console.log("코딩");
+    }
+}
+
+// es6 문법
+
+const person = {
+    coding(){
+        console.log("코딩");
+    }
+};
+
+// *** ARROW FUNCTION
+
+// 1. 단순 자바스크립트 표현식
+() => 10+20;
+
+// 2. 함수 선언 방식
+() => {
+    print();
+    log();
+    return 1+2;
+}
+
+// 파라미터가 하나인 경우
+const a = (num) => { return num + 100};
+const b = num => num + 100;
+
+// es6 문법의 map 객체
+// 순서보장
+const myMap = new Map();
+myMap.set(0, 'zero');
+myMap.set(1, 'one');
+myMap.set(2, 'two');
+myMap.set(3, 'three');
+
+const keyArray = [...myMap.keys()];	//[0, 1, 2, 3]
+const valueArray = [...myMap.values()];	//["zero", "one", "two", "three"]
