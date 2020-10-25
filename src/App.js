@@ -1,98 +1,73 @@
-import React, {Component} from 'react';
-import TodoListTemplate from './components/TodoListTemplate';
-import Form from './components/Form';
-import TodoItemList from './components/TodoItemList';
+import React, { Component, Fragment } from 'react';
+import logo from './logo192.png';
+import MyName from './hello/MyName';
+import Counter from './hello/Counter';
+
+import PhoneForm from './phoneBook/PhoneForm';
+import PhoneInfoList from './phoneBook/PhoneInfoList';
 
 class App extends Component {
 
-  id = 3;
+  id = 2;
 
   state = {
-    input : '',
-    todos: [
-      { id: 0, text: ' 리액트 소개', checked: false },
-      { id: 1, text: ' 리액트 소개', checked: true },
-      { id: 2, text: ' 리액트 소개', checked: false }
+    information: [
+      {
+        id: 0,
+        name: '박대기',
+        phone: '010-4401-3411'
+      },
+      {
+        id: 1,
+        name: '김민준',
+        phone: '010-0000-0001'
+      },
     ]
   }
 
-  handleChange = (e) => {
+  handleCreate = (data) => {
+    const { information } = this.state;
+    console.log(data);
     this.setState({
-      input : e.target.value
-    });
-  }
-
-  handleCreate = (e) => {
-    const {input, todos} = this.state;
-    this.setState({
-      input : '',
-      todos : todos.concat({
-        id : this.id++,
-        text : input,
-        checked : true
+      information: information.concat({
+        id: this.id++,
+        ...data
       })
-    });
-  }
-
-  handleKeyPress = (e) => {
-    if(e.key === 'Enter'){
-      this.handleCreate();
-    }
-  }
-
-  handleToggle = (id) => {
-    const {todos} = this.state;
-    // 파라미터로 받은 id를 가지고 몇번째 아이템인지 찾는다.
-    const index = todos.findIndex(todo => todo.id === id);
-    const selected = todos[index];  // 선택한 객체
-
-    const nextTodos = [...todos]; // 배열 복사
-
-    // 기존 값들을 복사하고 checked 값 덮어쓰기
-    nextTodos[index] = {
-      ...selected,
-      checked : !selected.checked
-    }
-
-    this.setState({
-      todos : nextTodos
-    });
-  };
-
-
-  handleRemove = (id) => {
-    const {todos} = this.state;
-    this.setState({
-      todos : todos.filter(todo => todo.id !== id)
     })
   }
 
-
-
-  render(){
-    const {input, todos} = this.state;
-    const {
-      handleChange,
-      handleCreate,
-      handleKeyPress,
-      handleToggle,
-      handleRemove
-    } = this;
-
-    return(
-      <TodoListTemplate form = {(
-        <Form
-          value = {input}
-          onKeyPress = {handleKeyPress}
-          onChange = {handleChange}
-          onCreate = {handleCreate}
-        />
-      )}>
-        <TodoItemList todos={todos} onToggle={handleToggle} onRemove={handleRemove}/>
-      </TodoListTemplate>
-    )
+  handleRemove = (id) => {
+    const { information } = this.state;
+    this.setState({
+      information: information.filter(info => info.id !== id)
+    })
   }
 
+  handleUpdate = (id, data) => {
+    const { information } = this.state;
+    this.setState({
+      information: information.map(
+        info => id === info.id ? { ...info, ...data } : info
+      )
+    })
+  }
+
+  render() {
+    const style = {
+      backgroundColor: 'black',
+      padding: '16px',
+      color: 'white',
+      fontSize: '12px'
+    }
+    const { information } = this.state;
+    return (
+      <div>
+        <PhoneForm onCreate={this.handleCreate} />
+        <PhoneInfoList data={information} onRemove={this.handleRemove}
+          onUpdate={this.handleUpdate} />
+      </div>
+    )
+  }
 }
 
 export default App;
